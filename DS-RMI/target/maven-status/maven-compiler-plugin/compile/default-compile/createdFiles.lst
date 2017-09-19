@@ -1,0 +1,5 @@
+ws\abhis\examples\RMIHelloWorld\client\WelcomeMessageCli.class
+ws\abhis\examples\RMIHelloWorld\starter\StartApp.class
+ws\abhis\examples\RMIHelloWorld\server\WelcomeMessageServ.class
+ws\abhis\examples\RMIHelloWorld\server\Starter.class
+ws\abhis\examples\RMIHelloWorld\server\WelcomeMessageDef.class
