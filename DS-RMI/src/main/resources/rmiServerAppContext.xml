@@ -19,7 +19,7 @@
         <property name="serviceInterface" value="ws.abhis.examples.RMIHelloWorld.server.WelcomeMessageDef"/>
         
         <!-- defaults to 1099 -->
-    	<property name="registryPort" value="1099"/>
+    	<property name="registryPort" value="8081"/>
     
     </bean>
 	

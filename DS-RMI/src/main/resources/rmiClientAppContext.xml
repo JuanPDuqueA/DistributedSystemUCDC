@@ -8,7 +8,7 @@
     <bean id="WelcomeM" class="org.springframework.remoting.rmi.RmiProxyFactoryBean">
         
         <!-- serviceUrl represents RMI Service Url called-->
-	    <property name="serviceUrl" value="rmi://localhost:1099/WelcomeM"/>
+	    <property name="serviceUrl" value="rmi://localhost:8081/WelcomeM"/>
 	    
 	    <!-- serviceInterface represents RMI Service Interface called -->
 	    <property name="serviceInterface" value="ws.abhis.examples.RMIHelloWorld.server.WelcomeMessageDef"/>

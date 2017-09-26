@@ -8,6 +8,7 @@ import ws.abhis.examples.RMIHelloWorld.server.WelcomeMessageDef;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.math.BigInteger;
 
 public class WelcomeMessageCli {
     private static Logger logger = Logger.getLogger(WelcomeMessageCli.class);
@@ -21,11 +22,16 @@ public class WelcomeMessageCli {
             BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
             logger.info("\n \n Ingrese el texto a pasar en minusculas: \n \n");
             String message = bufferRead.readLine();
-            rmiClient.sendMessage(message);
-            String msg = rmiClient.getMessages();
-            logger.info("\n"+msg+"\n");
+            if(message.length()<1||message.length()>15){
+                logger.error("Los valores digitados estan fuera del rango");
+            } else{
+                rmiClient.sendMessage(Long.valueOf(message));
+                String msg = rmiClient.getMessages();
+                logger.info("\n"+msg+"\n");
+            }
             logger.info("\n Presione enter para salir");
             System.in.read();
+
         } catch (Exception e) {
             logger.error(e);
         }
