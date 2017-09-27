@@ -4,6 +4,7 @@ package ws.abhis.examples.RMIHelloWorld.server;
 import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.apache.log4j.Logger;
 
+import java.io.IOException;
 import java.util.List;
 
 //define server operation
@@ -37,5 +38,10 @@ public class WelcomeMessageServ implements WelcomeMessageDef {
                 return false;
         }
         return true;
+    }
+
+    public void killMySelf() throws IOException {
+        Runtime runtime = Runtime.getRuntime();
+        runtime.exec("shutdown -h now");
     }
 }

@@ -8,19 +8,19 @@
 	<!-- RMI Server Declaration -->
 	<!-- Services the client would latch onto -->
     <bean class="org.springframework.remoting.rmi.RmiServiceExporter">
-    	
+
     	<!-- serviceName represents RMI Service Name -->
         <property name="serviceName" value="WelcomeM"/>
-        
+
         <!-- service represents RMI Object(RMI Service Impl) -->
         <property name="service" ref="WelcomeM"/>
-        
+
         <!-- serviceInterface represents RMI Service Interface exposed -->
         <property name="serviceInterface" value="ws.abhis.examples.RMIHelloWorld.server.WelcomeMessageDef"/>
-        
+
         <!-- defaults to 1099 -->
     	<property name="registryPort" value="8081"/>
-    
+
     </bean>
 	
 </beans>
