@@ -11,46 +11,50 @@ import java.util.*;
 
 public class WelcomeMessageCli {
     private static Logger logger = Logger.getLogger(WelcomeMessageCli.class);
+    private static Map<Integer, Long> times = new HashMap<>();
+    private static List<WelcomeMessageDef> servers = new ArrayList<>();
 
-    //start client
     public static void main(String[] args) throws Exception {
-        logger.info("Starting client....");
-        List<WelcomeMessageDef> clients = new ArrayList<WelcomeMessageDef>();
+        logger.info("Iniciando el cliente....");
         BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
-        logger.info("\n \n Ingrese el numero maximo: \n \n");
+        logger.info("\n \n Ingrese el numero a calcular los primos: \n \n");
         String message = bufferRead.readLine();
         while (true) {
             ApplicationContext context = new ClassPathXmlApplicationContext("rmiClientAppContext.xml");
-            clients.clear();
-            Map<Integer, Long> times = new HashMap<Integer, Long>();
-            for (int i = 0; i < 2; i++)
+            servers.clear();
+            times.clear();
+            for (int i = 0; i < 3; i++)
                 try {
-                    clients.add((WelcomeMessageDef) context.getBean("WelcomeM" + i));
+                     servers.add((WelcomeMessageDef) context.getBean("welcomeM" + i));
                 } catch (Exception e) {
-                    logger.info(clients.size() + " servidores en linea");
+                    logger.info(servers.size() + " servidores en linea");
                 }
-            if (clients.size() == 1) break;
+            if (servers.size() == 1) break;
             if (message.length() < 1 || message.length() > 15) {
                 logger.error("Los valores digitados estan fuera del rango");
             } else {
-                for (WelcomeMessageDef rmiClient : clients) {
-                    rmiClient.sendMessage(Long.valueOf(message));
-                    String msg = rmiClient.getMessages();
-                    logger.info("\n" + msg + "\n");
-                    times.put(clients.indexOf(rmiClient), Long.valueOf(msg.substring(msg.indexOf(",") + 1)));
-                }
+
+                Arrays.stream(servers.toArray()).parallel().
+                        forEach(rmiServer -> execute(
+                                (WelcomeMessageDef) rmiServer,message,servers.indexOf(rmiServer)));
                 Map.Entry<Integer, Long> maxEntry = Collections.max(times.entrySet(),
                         new Comparator<Map.Entry<Integer, Long>>() {
                             public int compare(Map.Entry<Integer, Long> e1, Map.Entry<Integer, Long> e2) {
                                 return e1.getValue().compareTo(e2.getValue());
                             }
                         });
-                clients.get(maxEntry.getKey()).killMySelf();
+                logger.info("El servidor numero "+maxEntry.getKey()+" ha perdido y sera apagado");
+                servers.get(maxEntry.getKey()).killMySelf();
                 Thread.sleep(3000);
             }
         }
         logger.info("\n Presione enter para salir");
         System.in.read();
     }
-
+    private static void execute(WelcomeMessageDef rmiServer, String message, int serverNumber){
+        rmiServer.sendMessage(Long.valueOf(message));
+        String msg = rmiServer.getMessages();
+        logger.info("\n" + msg + "\n");
+        times.put(serverNumber, Long.valueOf(msg.substring(msg.indexOf(",") + 1)));
+    }
 }

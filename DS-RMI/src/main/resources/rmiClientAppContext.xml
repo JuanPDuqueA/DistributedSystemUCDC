@@ -1,35 +1,54 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
 		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
-	<!-- RMI Client Declaration -->
-	<!-- This will be one published service. There can be multiple published services. -->
-    <bean id="WelcomeM0" class="org.springframework.remoting.rmi.RmiProxyFactoryBean" lazy-init="true">
+    <bean id="applicationProperties" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="location" value="application.properties"/>
+    </bean>
+
+    <!-- RMI Client Declaration -->
+    <!-- This will be one published service. There can be multiple published services. -->
+    <bean id="welcomeM0" class="org.springframework.remoting.rmi.RmiProxyFactoryBean" lazy-init="true">
 
         <!-- serviceUrl represents RMI Service Url called-->
-	    <property name="serviceUrl" value="rmi://192.168.137.14:8081/WelcomeM"/>
+        <property name="serviceUrl" value="${server1.endpoint}"/>
 
-	    <!-- serviceInterface represents RMI Service Interface called -->
-	    <property name="serviceInterface" value="ws.abhis.examples.RMIHelloWorld.server.WelcomeMessageDef"/>
 
-		<!-- refreshStubOnConnectFailure enforces automatic re-lookup of the stub if a
-							call fails with a connect exception -->
-	    <property name="refreshStubOnConnectFailure" value="true"/>
+        <!-- serviceInterface represents RMI Service Interface called -->
+        <property name="serviceInterface" value="ws.abhis.examples.RMIHelloWorld.server.WelcomeMessageDef"/>
 
-	</bean>
-    <bean id="WelcomeM1" class="org.springframework.remoting.rmi.RmiProxyFactoryBean" lazy-init="true">
+        <!-- refreshStubOnConnectFailure enforces automatic re-lookup of the stub if a
+                            call fails with a connect exception -->
+        <property name="refreshStubOnConnectFailure" value="true"/>
+
+    </bean>
+
+    <bean id="welcomeM1" class="org.springframework.remoting.rmi.RmiProxyFactoryBean" lazy-init="true">
 
         <!-- serviceUrl represents RMI Service Url called-->
-	    <property name="serviceUrl" value="rmi://192.168.137.125:8081/WelcomeM"/>
+        <property name="serviceUrl" value="${server2.endpoint}"/>
 
-	    <!-- serviceInterface represents RMI Service Interface called -->
-	    <property name="serviceInterface" value="ws.abhis.examples.RMIHelloWorld.server.WelcomeMessageDef"/>
+        <!-- serviceInterface represents RMI Service Interface called -->
+        <property name="serviceInterface" value="ws.abhis.examples.RMIHelloWorld.server.WelcomeMessageDef"/>
 
-		<!-- refreshStubOnConnectFailure enforces automatic re-lookup of the stub if a
-							call fails with a connect exception -->
-	    <property name="refreshStubOnConnectFailure" value="true"/>
+        <!-- refreshStubOnConnectFailure enforces automatic re-lookup of the stub if a
+                            call fails with a connect exception -->
+        <property name="refreshStubOnConnectFailure" value="true"/>
 
-	</bean>
+    </bean>
 
+    <bean id="welcomeM2" class="org.springframework.remoting.rmi.RmiProxyFactoryBean" lazy-init="true">
+
+        <!-- serviceUrl represents RMI Service Url called-->
+        <property name="serviceUrl" value="${server3.endpoint}"/>
+
+        <!-- serviceInterface represents RMI Service Interface called -->
+        <property name="serviceInterface" value="ws.abhis.examples.RMIHelloWorld.server.WelcomeMessageDef"/>
+
+        <!-- refreshStubOnConnectFailure enforces automatic re-lookup of the stub if a
+                            call fails with a connect exception -->
+        <property name="refreshStubOnConnectFailure" value="true"/>
+
+    </bean>
 </beans>
